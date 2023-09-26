@@ -1,0 +1,24 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to GitHub Pages
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.actions.artifacts.upload({
+              repository: github.repository,
+              artifact: 'public',
+              name: 'public',
+              path: '.',
+            })
